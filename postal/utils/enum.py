@@ -1,5 +1,5 @@
 import six
-
+import logging
 
 class EnumValue(object):
     def __init__(self, value, name=None):
@@ -10,11 +10,16 @@ class EnumValue(object):
         return self.value
 
     def __cmp__(self, other):
-        if isinstance(other, EnumValue):
-            return self.value.__cmp__(other.value)
-        else:
-            return self.value.__cmp__(other)
 
+        try:
+            if isinstance(other, EnumValue):
+                return self.value.__cmp__(other.value)
+            else:
+                return self.value.__cmp__(other)
+        except Exception, e:
+            logging.warning("failed to __cmp__ '%s' this: '%s' that: '%s", self.name, self.value, other)
+            raise Exception, e
+        
     def __unicode__(self):
         return self.name
 
