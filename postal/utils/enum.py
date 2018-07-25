@@ -1,4 +1,5 @@
 import six
+import types
 
 class EnumValue(object):
     def __init__(self, value, name=None):
@@ -10,6 +11,12 @@ class EnumValue(object):
 
     def __cmp__(self, other):
 
+        # I AM GRASPING AT STRAWS... (20180725/thisisaaronland)
+        # https://github.com/openvenues/lieu/issues/15
+        
+        if self.name == 'EXACT_DUPLICATE' and type(other) == types.TupleType:
+            other = long(other[1])
+            
         try:
             if isinstance(other, EnumValue):
                 return self.value.__cmp__(other.value)
