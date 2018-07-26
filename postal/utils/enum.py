@@ -13,8 +13,13 @@ class EnumValue(object):
 
         # I AM GRASPING AT STRAWS... (20180725/thisisaaronland)
         # https://github.com/openvenues/lieu/issues/15
+
+        possible_tuples = (
+            'EXACT_DUPLICATE',
+            'LIKELY_DUPLICATE'
+        )
         
-        if self.name == 'EXACT_DUPLICATE' and type(other) == types.TupleType:
+        if self.name in possible_tuples and type(other) == types.TupleType:
             other = long(other[1])
             
         try:
